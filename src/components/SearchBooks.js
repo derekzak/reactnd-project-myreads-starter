@@ -1,26 +1,28 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import ListBooks from "./ListBooks";
+import * as BooksAPI from "../utils/BooksAPI";
 
 class SearchBooks extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired,
     onClickBack: PropTypes.func.isRequired
   };
   state = {
+    books: [],
     query: ""
   };
   updateQuery = query => {
-    this.setState(() => ({
-      query: query
-    }));
-  };
-  clearQuery = () => {
-    this.updateQuery("");
+    BooksAPI.search(query).then(books => {
+      this.setState(() => ({
+        books,
+        query: query
+      }));
+    });
   };
 
   render() {
-    const { query } = this.state;
-    const { books, onClickBack } = this.props;
+    const { books, query } = this.state;
+    const { onClickBack } = this.props;
 
     return (
       <div className="search-books">
@@ -47,7 +49,7 @@ class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid" />
+          <ListBooks books={books} />
         </div>
       </div>
     );
