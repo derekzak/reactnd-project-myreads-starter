@@ -1,7 +1,15 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class MyBooks extends Component {
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+    onClickSearch: PropTypes.func.isRequired
+  };
+
   render() {
+    const { books, onClickSearch } = this.props;
+
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -249,9 +257,7 @@ class MyBooks extends Component {
           </div>
         </div>
         <div className="open-search">
-          <button onClick={() => this.setState({ showSearchPage: true })}>
-            Add a book
-          </button>
+          <button onClick={onClickSearch}>Add a book</button>
         </div>
       </div>
     );
