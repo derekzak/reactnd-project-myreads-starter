@@ -16,7 +16,9 @@ class ListBooks extends Component {
         <h2 className="bookshelf-title">{bookshelfTitle}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
-            {books && books.map(book => <Book key={book.id} book={book} />)}
+            {books &&
+              Array.isArray(books) &&
+              books.map(book => <Book key={book.id} book={book} />)}
           </ol>
         </div>
       </div>
