@@ -1,13 +1,25 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import * as BooksAPI from "../utils/BooksAPI";
 
 class Book extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired
   };
+  state = {
+    selectValue: this.props.book.shelf
+  };
+  handleChange = shelf => {
+    BooksAPI.update(this.props.book, shelf).then(books => {
+      this.setState(() => ({
+        selectValue: shelf
+      }));
+    });
+  };
 
   render() {
     const { book } = this.props;
+    const { selectValue } = this.state;
 
     return (
       <li>
@@ -22,7 +34,10 @@ class Book extends Component {
               }}
             />
             <div className="book-shelf-changer">
-              <select>
+              <select
+                onChange={event => this.handleChange(event.target.value)}
+                value={selectValue}
+              >
                 <option value="move" disabled>
                   Move to...
                 </option>
