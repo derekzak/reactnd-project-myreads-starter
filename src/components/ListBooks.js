@@ -5,11 +5,12 @@ import Book from "./Book";
 class ListBooks extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    bookshelfTitle: PropTypes.string
+    bookshelfTitle: PropTypes.string,
+    refreshShelf: PropTypes.func.isRequired
   };
 
   render() {
-    const { books, bookshelfTitle } = this.props;
+    const { books, bookshelfTitle, refreshShelf } = this.props;
 
     return (
       <div className="bookshelf">
@@ -18,7 +19,9 @@ class ListBooks extends Component {
           <ol className="books-grid">
             {books &&
               Array.isArray(books) &&
-              books.map(book => <Book key={book.id} book={book} />)}
+              books.map(book => (
+                <Book key={book.id} book={book} refreshShelf={refreshShelf} />
+              ))}
           </ol>
         </div>
       </div>

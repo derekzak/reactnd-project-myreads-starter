@@ -4,7 +4,8 @@ import * as BooksAPI from "../utils/BooksAPI";
 
 class Book extends Component {
   static propTypes = {
-    book: PropTypes.object.isRequired
+    book: PropTypes.object.isRequired,
+    refreshShelf: PropTypes.func.isRequired
   };
   state = {
     selectValue: this.props.book.shelf
@@ -15,6 +16,7 @@ class Book extends Component {
         selectValue: shelf
       }));
     });
+    this.props.refreshShelf();
   };
 
   render() {

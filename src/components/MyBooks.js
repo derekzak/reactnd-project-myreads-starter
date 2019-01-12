@@ -5,11 +5,12 @@ import ListBooks from "./ListBooks";
 class MyBooks extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    onClickSearch: PropTypes.func.isRequired
+    onClickSearch: PropTypes.func.isRequired,
+    refreshShelf: PropTypes.func.isRequired
   };
 
   render() {
-    const { books, onClickSearch } = this.props;
+    const { books, onClickSearch, refreshShelf } = this.props;
 
     return (
       <div className="list-books">
@@ -21,14 +22,17 @@ class MyBooks extends Component {
             <ListBooks
               books={books.filter(book => book.shelf === "currentlyReading")}
               bookshelfTitle="Currently Reading"
+              refreshShelf={refreshShelf}
             />
             <ListBooks
               books={books.filter(book => book.shelf === "wantToRead")}
               bookshelfTitle="Want to Read"
+              refreshShelf={refreshShelf}
             />
             <ListBooks
               books={books.filter(book => book.shelf === "read")}
               bookshelfTitle="Read"
+              refreshShelf={refreshShelf}
             />
           </div>
         </div>

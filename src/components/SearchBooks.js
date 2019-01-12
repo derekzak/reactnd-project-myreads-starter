@@ -5,7 +5,8 @@ import * as BooksAPI from "../utils/BooksAPI";
 
 class SearchBooks extends Component {
   static propTypes = {
-    onClickBack: PropTypes.func.isRequired
+    onClickBack: PropTypes.func.isRequired,
+    refreshShelf: PropTypes.func.isRequired
   };
   state = {
     books: [],
@@ -22,7 +23,7 @@ class SearchBooks extends Component {
 
   render() {
     const { books, query } = this.state;
-    const { onClickBack } = this.props;
+    const { onClickBack, refreshShelf } = this.props;
 
     return (
       <div className="search-books">
@@ -49,7 +50,7 @@ class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ListBooks books={books} />
+          <ListBooks books={books} refreshShelf={refreshShelf} />
         </div>
       </div>
     );
