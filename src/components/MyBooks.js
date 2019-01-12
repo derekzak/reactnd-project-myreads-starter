@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ListBooks from "./ListBooks";
+import { Link } from "react-router-dom";
 
 class MyBooks extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    onClickSearch: PropTypes.func.isRequired,
     refreshShelf: PropTypes.func.isRequired
   };
 
   render() {
-    const { books, onClickSearch, refreshShelf } = this.props;
+    const { books, refreshShelf } = this.props;
 
     return (
       <div className="list-books">
@@ -37,7 +37,7 @@ class MyBooks extends Component {
           </div>
         </div>
         <div className="open-search">
-          <button onClick={onClickSearch}>Add a book</button>
+          <Link to="/search">Add a book</Link>
         </div>
       </div>
     );

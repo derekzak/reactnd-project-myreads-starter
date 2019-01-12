@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ListBooks from "./ListBooks";
 import * as BooksAPI from "../utils/BooksAPI";
+import { Link } from "react-router-dom";
 
 class SearchBooks extends Component {
   static propTypes = {
-    onClickBack: PropTypes.func.isRequired,
     refreshShelf: PropTypes.func.isRequired
   };
   state = {
@@ -23,14 +23,14 @@ class SearchBooks extends Component {
 
   render() {
     const { books, query } = this.state;
-    const { onClickBack, refreshShelf } = this.props;
+    const { refreshShelf } = this.props;
 
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <button className="close-search" onClick={onClickBack}>
+          <Link className="close-search" to="/">
             Close
-          </button>
+          </Link>
           <div className="search-books-input-wrapper">
             {/*
                   NOTES: The search from BooksAPI is limited to a particular set of search terms.

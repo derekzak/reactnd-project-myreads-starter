@@ -3,14 +3,14 @@ import "./App.css";
 import * as BooksAPI from "./utils/BooksAPI";
 import MyBooks from "./components/MyBooks";
 import SearchBooks from "./components/SearchBooks";
+import { Route } from "react-router-dom";
 
 class BooksApp extends React.Component {
   constructor(props) {
     super(props);
     this.refreshShelf = this.refreshShelf.bind(this);
     this.state = {
-      books: [],
-      showSearchPage: false
+      books: []
     };
   }
   componentDidMount() {
@@ -33,18 +33,20 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <SearchBooks
-            onClickBack={() => this.setState({ showSearchPage: false })}
-            refreshShelf={this.refreshShelf}
-          />
-        ) : (
-          <MyBooks
-            books={books}
-            onClickSearch={() => this.setState({ showSearchPage: true })}
-            refreshShelf={this.refreshShelf}
-          />
-        )}
+        <Route
+          exact
+          path="/"
+          render={({ history }) => (
+            <MyBooks books={books} refreshShelf={this.refreshShelf} />
+          )}
+        />
+        <Route
+          path="/search"
+          render={({ history }) => (
+            <SearchBooks refreshShelf={this.refreshShelf} />
+          )}
+        />
+        }
       </div>
     );
   }
