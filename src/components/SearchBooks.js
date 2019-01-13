@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 class SearchBooks extends Component {
   static propTypes = {
+    shelfBooks: PropTypes.array.isRequired,
     refreshShelf: PropTypes.func.isRequired
   };
   state = {
@@ -13,7 +14,7 @@ class SearchBooks extends Component {
     query: ""
   };
   updateQuery = query => {
-    if (query) {
+    if (query !== "") {
       BooksAPI.search(query).then(books => {
         this.setState(() => ({
           books,
@@ -27,10 +28,25 @@ class SearchBooks extends Component {
       }));
     }
   };
+  mergeBookArrays = (shelfBooks, books) => {
+    var mergedBooks = [];
+    books.map(book => {
+      var found = shelfBooks.find(element => {
+        return element.id === book.id;
+      });
+      if (found) {
+        mergedBooks.push(Object.assign({}, book, { shelf: found.shelf }));
+      } else {
+        mergedBooks.push(book);
+      }
+      return mergedBooks[mergedBooks.length - 1];
+    });
+    return mergedBooks;
+  };
 
   render() {
     const { books, query } = this.state;
-    const { refreshShelf } = this.props;
+    const { shelfBooks, refreshShelf } = this.props;
 
     return (
       <div className="search-books">
@@ -57,7 +73,10 @@ class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ListBooks books={books} refreshShelf={refreshShelf} />
+          <ListBooks
+            books={this.mergeBookArrays(shelfBooks, books)}
+            refreshShelf={refreshShelf}
+          />
         </div>
       </div>
     );

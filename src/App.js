@@ -42,7 +42,7 @@ class BooksApp extends React.Component {
         <Route
           path="/search"
           render={({ history }) => (
-            <SearchBooks refreshShelf={this.refreshShelf} />
+            <SearchBooks shelfBooks={books} refreshShelf={this.refreshShelf} />
           )}
         />
         }
