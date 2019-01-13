@@ -13,12 +13,19 @@ class SearchBooks extends Component {
     query: ""
   };
   updateQuery = query => {
-    BooksAPI.search(query).then(books => {
+    if (query) {
+      BooksAPI.search(query).then(books => {
+        this.setState(() => ({
+          books,
+          query: query
+        }));
+      });
+    } else {
       this.setState(() => ({
-        books,
+        books: [],
         query: query
       }));
-    });
+    }
   };
 
   render() {
